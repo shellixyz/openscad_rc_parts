@@ -1,0 +1,3 @@
+[submodule "openscad_library"]
+	path = openscad_library
+	url = https://github.com/shellixyz/openscad_library
