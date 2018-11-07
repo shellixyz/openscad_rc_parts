@@ -15,8 +15,8 @@ module benewake_tfmini_lidar(show_connector = true) {
         union() {
             /*cube2(lidar_box_size, center_xy = true);*/
             hull() {
-                cube2([lidar_box_size[0], lidar_box_size[1], lidar_box_size[2] - 1], center_xy = true);
-                translate([0, 0, lidar_box_size[2] - 0.01]) cube2([lidar_box_size[0] - 1, lidar_box_size[1] - 1, 1], center_xy = true);
+                cube_rounded_vertical_edges([lidar_box_size[0], lidar_box_size[1], lidar_box_size[2] - 1], 2, center_xy = true);
+                translate([0, 0, lidar_box_size[2] - 0.01]) cube_rounded_vertical_edges([lidar_box_size[0] - 1, lidar_box_size[1] - 1, 1], 1, center_xy = true);
             }
             hull() {
                 cube2([lidar_box_size[0], lidar_ears_width, lidar_ears_height], center_xy = true);
