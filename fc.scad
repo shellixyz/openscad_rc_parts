@@ -20,6 +20,7 @@ fc_hole_inset = (fc_size - fc_holes_distance) / 2;
 fc_corner_radius = fc_hole_inset;
 
 use <openscad_library/cube.scad>;
+use <openscad_library/mirror.scad>;
 
 module fc(ports = false, center_xy = false, center_x = false, center_y = false) {
   translate([(center_xy || center_x || center_xy ? -fc_size/2 : 0), (center_xy || center_y ? -fc_size/2 : 0), 0]) difference() {
@@ -55,4 +56,18 @@ module fc_holes_pattern(d, h) {
 module fc_mounting_pattern() {
   for (xf = [-1, 1]) for (yf = [-1, 1]) translate([(xf * fc_holes_distance) / 2, (yf * fc_holes_distance) / 2, 0]) children();
 }
-fc_mounting_pattern() cylinder(d=3, h=3);
+/*fc_mounting_pattern() cylinder(d=3, h=3);*/
+
+pixhawk_border_size = [81.3, 49.3];
+pixhawk_center_section_size = [42, 44.8];
+pixhawk_thickness= 15.9;
+pixhawk_size_transition_length = 5;
+
+module pixhawk() {
+    cube2([pixhawk_center_section_size[0], pixhawk_center_section_size[1], pixhawk_thickness], center_xy=true);
+    mirror_copy_x() hull() {
+        translate([pixhawk_center_section_size[0] / 2 - 0.01, 0, 0]) cube2([0.01, pixhawk_center_section_size[1], pixhawk_thickness], center_y=true);
+        translate([pixhawk_center_section_size[0] / 2 + pixhawk_size_transition_length, 0, 0]) cube2([(pixhawk_border_size[0] - pixhawk_center_section_size[0]) / 2 - pixhawk_size_transition_length, pixhawk_border_size[1], pixhawk_thickness], center_y=true);
+    }
+}
+/*pixhawk();*/
